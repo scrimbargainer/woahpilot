@@ -1,6 +1,6 @@
- 
- export default {
-   async fetch(request :any) {
+
+ const worker_export_default= {
+   async fetch(request :Request, env :Record<string, string>, ctx :EventContext<Record<string, string>, any, Record<string, unknown>>) {
      try {
        const url = new URL(request.url);
        const sourceUrl = url.searchParams.get("url");
@@ -158,4 +158,7 @@
  
    return { messages, changed: false };
  }
- 
+
+ export async function onRequest(ctx :EventContext<Record<string, string>, any, Record<string, unknown>>) {
+     return await worker_export_default.fetch(ctx.request, ctx.env, ctx)                                  }
+
